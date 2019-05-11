@@ -175,29 +175,37 @@ def Position_Analyze(position,name):
     bar3.use_theme('infographic')
     bar3.add('%s' % name, wys, values, is_more_utils=True, mark_point=['min', 'max'], yaxis_rotate=30)
 
-    max = [0] * 4
-    min = [0] * 4
-    leng = [0] * 4
+    max = [0] * 6
+    min = [0] * 6
+    leng = [0] * 6
     for i in range(0, len(salary)):
         s = salary[i].split('-')
         if len(s) == 2:
-            if education[i] == edu[0]:
+            if workyears[i] == wys[0]:
                 max[0] = max[0] + int(s[1])
                 min[0] = min[0] + int(s[0])
                 leng[0] = leng[0] + 1
-            elif education[i] == edu[1]:
+            elif workyears[i] == wys[1]:
                 max[1] = max[1] + int(s[1])
                 min[1] = min[1] + int(s[0])
                 leng[1] = leng[1] + 1
-            elif education[i] == edu[2]:
+            elif workyears[i] == wys[2]:
                 max[2] = max[2] + int(s[1])
                 min[2] = min[2] + int(s[0])
                 leng[2] = leng[2] + 1
-            else:
+            elif workyears[i] == wys[3]:
                 max[3] = max[3] + int(s[1])
                 min[3] = min[3] + int(s[0])
                 leng[3] = leng[3] + 1
-    for i in range(0, 4):
+            elif workyears[i] == wys[4]:
+                max[4] = max[4] + int(s[1])
+                min[4] = min[4] + int(s[0])
+                leng[4] = leng[4] + 1
+            else:
+                max[5] = max[5] + int(s[1])
+                min[5] = min[5] + int(s[0])
+                leng[5] = leng[5] + 1
+    for i in range(0, 6):
         if leng[i] == 0:
             continue
         max[i] = format(max[i]/leng[i], '.1f')
@@ -205,8 +213,8 @@ def Position_Analyze(position,name):
 
     bar4 = Bar('%s薪资水平' % name, '单位（k/千元）', page_title='薪水水平')
     bar4.use_theme('infographic')
-    bar4.add('%s_Max' % name, edu, max, is_more_utils=True, mark_point=['min', 'max'], yaxis_rotate=30)
-    bar4.add('%s_Min' % name, edu, min, is_more_utils=True, mark_point=['min', 'max'], yaxis_rotate=30)
+    bar4.add('%s_Max' % name, wys, max, is_more_utils=True, mark_point=['min', 'max'], yaxis_rotate=30)
+    bar4.add('%s_Min' % name, wys, min, is_more_utils=True, mark_point=['min', 'max'], yaxis_rotate=30)
     # vintage, macarons, infographic, shine和roma
 
     if name == "C#":

@@ -13,6 +13,8 @@ import random
 import os
 import pandas as pd
 
+from test import conn
+
 
 class LagouSpider(object):
 
@@ -25,11 +27,13 @@ class LagouSpider(object):
 
     def __init__(self):
         self.driver = webdriver.Chrome(executable_path=LagouSpider.driver_path)
+
         fp = open('../data/lagou.csv', 'a', newline='', encoding='utf-8')
-        self.writer = csv.DictWriter(fp, ['company_name', 'position_name', 'salary', 'city', 'work_years', 'education', 'advantage', 'desc', 'mark'])
+        self.writer = csv.DictWriter(fp, ['company_name', 'position_name', 'salary', 'city', 'work_years', 'education', 'advantage', 'description', 'mark'])
         file_size = os.path.getsize(r'../data/lagou.csv')
         if file_size == 0:
             self.writer.writeheader()
+
         self.urls = []
         # self.url = 'https://www.lagou.com/jobs/list_php?labelWords=&fromSearch=true&suginput='
         # self.positions = []
@@ -106,8 +110,7 @@ class LagouSpider(object):
             education = education.replace("及以上", "")
         advantage = "".join(html.xpath("//dd[@class='job-advantage']//p/text()")).strip()
         advantage = ",".join(re.split(",|。|，| |、|；", advantage)).strip(',')
-        # desc = "".join(html.xpath("//dd[@class='job_bt']//div[@class='job-detail']//text()"))
-        # desc = "".join(desc.split())
+
         desc = self.driver.current_url
         position = {
             'company_name': company_name,

@@ -30,7 +30,7 @@ class BossSpider(object):
         self.domain = 'https://www.zhipin.com'
         fp = open('../data/boss.csv', 'a', newline='', encoding='utf-8')
         self.writer = csv.DictWriter(fp, ['company_name', 'position_name', 'salary', 'city', 'work_years', 'education',
-                                          'advantage', 'desc', 'mark'])
+                                          'advantage', 'description', 'mark'])
         file_size = os.path.getsize(r'../data/boss.csv')
         if file_size == 0:
             self.writer.writeheader()
@@ -69,7 +69,6 @@ class BossSpider(object):
                     time.sleep(random.randint(1, 3))
                     next_btn.click()
                 time.sleep(random.randint(2, 5))
-                # j = j+1
             self.mark = self.mark + 1
         self.driver.quit()
 
@@ -129,12 +128,9 @@ class BossSpider(object):
         city = infos[0:len(infos)-len_work_years-len_education]
         work_years = infos[len(infos)-len_work_years-len_education:len(infos)-len_education]
         education = infos[len(infos)-len_education:len(infos)]
-        # city = html.xpath("./div[@class='info-primary']/p/text()")[0]
         advantage = html.xpath(
             "//div[@class='tag-container']/div[@class='job-tags']/span/text()")
         advantage = ",".join(list(set(advantage)))
-        # desc = html.xpath("//div[@class='job-sec']/div[@class='text']//text()")
-        # desc = "/n".join(desc).strip()
         desc = self.driver.current_url
         position = {
             'company_name': company_name,
